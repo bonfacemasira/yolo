@@ -30,10 +30,10 @@ Make sure that you have the following installed:
 
 ## Screemshots
 
-### Backend
+### Backend screenshot
 
 ![image](https://github.com/bonfacemasira/sms-portal/assets/104436879/b7bb36c8-f254-4c89-b98c-6891816fba06)
 
-### Client
+### Client screenshot
 
 ![image](https://github.com/bonfacemasira/sms-portal/assets/104436879/c3a44127-9f61-48f4-8467-aa56d5920b38)
