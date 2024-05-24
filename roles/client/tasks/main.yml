@@ -1,0 +1,15 @@
+---
+- name: Build Docker image for client
+  docker_image:
+    name: client
+    source: build
+    tag: 1.0.0
+    build:
+      path: "{{ dockerfile_path }}"
+      pull: yes
+
+  register: image
+
+- name: Check image
+  debug:
+    var: image
