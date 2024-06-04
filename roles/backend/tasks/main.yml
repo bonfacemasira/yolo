@@ -1,15 +1,24 @@
 ---
-- name: Build Docker image for Backend
-  docker_image:
-    name: backend
-    source: build
-    tag: 1.0.0
-    build:
-      path: "{{ dockerfile_path }}"
-      pull: yes
+# Backend Role
+#Cloning repo
+- name: Clone Repository
+  git:
+    repo: "https://github.com/bonfacemasira/yolo.git"
+    dest: "/var/www/backend"
 
-  register: image
-
-- name: Check image
-  debug:
-    var: image
+#Configuring the containers
+- name: Build & start backend container
+  docker_container:
+    name: server_backend
+    image: "{{ backend_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/www/backend:/var/www/backend
+    networks:
+      - name: yolo_net
+    env:
+      MONGODB_URL: "mongodb://yolo_db:27018"
+      DB_NAME: yolo_db

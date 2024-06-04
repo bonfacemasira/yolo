@@ -1,15 +1,19 @@
 ---
-- name: Build Docker image for client
-  docker_image:
-    name: client
-    source: build
-    tag: 1.0.0
-    build:
-      path: "{{ dockerfile_path }}"
-      pull: yes
+#Frontend Role
+- name: Clone Repository
+  git:
+    repo: "https://github.com/bonfacemasira/yolo.git"
+    dest: /var/www/client
 
-  register: image
-
-- name: Check image
-  debug:
-    var: image
+- name: Build & start client container
+  docker_container:
+    name: react_app
+    image: "{{client_image}}"
+    state: started
+    restart_policy: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - /var/www/client:/var/www/client
+    networks:
+      - name: yolo_net

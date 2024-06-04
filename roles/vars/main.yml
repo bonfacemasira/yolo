@@ -1,0 +1,9 @@
+#vars/main.yaml
+
+docker_compose_version: "3.5"
+client_image: "nyachuba/yolo-client:0.0.2"
+backend_image: "nyachuba/yolo-backend:0.0.2"
+mongo_image: "mongo:latest"
+mongo_root_username: "admin"
+mongo_root_password: "password"
+mongo_database: "local"
