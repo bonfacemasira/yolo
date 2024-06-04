@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo-frontend-client
+  namespace: yolo
+  labels:
+    app: yolo-frontend-client
+spec:
+  selector:
+    matchLabels:
+      app: yolo-frontend-client
+  replicas:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: yolo-frontend-client
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: yolo-frontend-client
+          image: nyachuba/yolo-frontend-client:0.0.2
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 3000
+              name: yolo-frontend-client
+          env:
+            - name: REACT_APP_API_URL
+              value: http://yolo-service:5000
+
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-frontend-client
+  namespace: yolo
+  labels:
+    app: yolo-frontend-client
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      nodePort: 30006
+  selector:
+    app: yolo-frontend-client
+  type: LoadBalancer
